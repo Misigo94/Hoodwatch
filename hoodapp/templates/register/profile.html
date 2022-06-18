@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load bootstrap5 %}
+{% block content %}
+{{block.super}}
+
+                <p>Username: {{ current_profile.user.username }}</p>
+                <p>Bio: {{ current_profile.about }}</p>
+                <p>Email: {{ current_profile.email }}</p>
+                <p>Location: {{ current_profile.location }}</p>
+                
