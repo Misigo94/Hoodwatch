@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+    {%block content %}
+
+    <p>hello {{user.username}}</p>
+
+    {% for n in neigh %}
+        {{n.name}}<br>
+        {{n.location}}
+    {% endfor %}
+    {% endblock %}
