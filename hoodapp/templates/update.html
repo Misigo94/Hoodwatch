@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Hood list</h2>
+{% for hood in hoods %}
+{{hood.name}}<br>
+{{hood.location}}<br>
+{{hood.admin}}
+<a href="{% url 'singlehood' pk=hood.id%}">View Detail</a><br>
+<a href="{% url 'delete' pk=hood.id%}">View Detail</a><br>
+{% endfor %}
+
+{% endblock %}
