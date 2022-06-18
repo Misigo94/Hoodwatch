@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{{hood.name}}
+
+{% for bus in business %}
+ 
+ <p>{{ bus.name}}</p>
+ <p>{{ bus.email}}</p>
+ <p>{{ bus.profile}}</p>
+{% endfor %}
+
+<form action="" method="post">
+    {% csrf_token %}
+    <p>are you aure you want to delete?</p>
+    <input type="submit" value="Delete">
+</form>
+
+{% endblock %}
