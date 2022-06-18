@@ -1,0 +1,25 @@
+{% extends 'base.html' %} 
+{% block content %}
+{{block.super}}
+<h1 class="text-center mt-5 mb-5">Search for {{ search_name }}</h1>
+<div class="container">
+    <div class="row">
+        {% for post in search_results %}
+        <div class='col'>
+            <div class="text-left p-2">
+                <p><strong>{{ post.title }}</strong></p>
+                <p>{{post.description}}</p>
+                <p>{{post.date}}</p>
+                <hr>
+                <!-- <div class="d-flex justify-content-between align-items-center">
+            <span>By <a href="#">{{ post.author.profile }}</a></span>
+            <span><sub> From Kenya</sub></span>
+          </div> -->
+            </div>
+        </div>
+        {% empty %}
+        <p class="alert alert-info text-center">No Search Results for {{ search_term }}</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
