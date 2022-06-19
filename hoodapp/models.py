@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Q
 from PIL import Image
+from django.urls import reverse
 # Create your models here.
 
 class Neighborhood(models.Model):
@@ -48,11 +49,11 @@ class Profile(models.Model):
 
     def save(self, **kwargs):
         super().save( **kwargs)
-        img= Image.open(self. profile_picture.path)
+        img= Image.open(self. image.path)
         if img.height > 250 or img.width > 250:
             output_size = (250, 2500)
             img.thumbnail(output_size)
-            img.save(self. profile_picture.path)
+            img.save(self. image.path)
 
 class Business(models.Model):
     name=models.CharField(max_length=255)
@@ -101,3 +102,13 @@ class Post(models.Model):
     def delete_post(self):
         self.delete()
 
+    def user_post(self,cls,username):
+        posts=cls.objects.filter(author_username=username)
+        return posts
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
+    class Meta:
+      ordering = ['-id']
+
+        
