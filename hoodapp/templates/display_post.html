@@ -7,4 +7,20 @@
     {{post.description}}
     {% endfor %}
 </div>
+
+{% for post in posts%}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p>Name:{{post.title}}</p>
+        <p>About:{{post.description}}</p>
+        <p>Location:{{post.location}}</p>
+        <p>Author:{{post.author}}</p>
+        <p>Date posted:{{post.date}}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
+{% endfor %}
+
+
 {% endblock %}
