@@ -1,10 +1,27 @@
 {% extends 'base.html' %}
-    {%block content %}
+{%block content %}
 
     <p>hello {{user.username}}</p>
 
+       
     {% for n in neigh %}
-        {{n.name}}<br>
-        {{n.location}}
-    {% endfor %}
-    {% endblock %}
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p>Name:{{n.name}}</p>
+            <p>Location:{{n.location}}</p>
+            <p>occupant_count{{n.occupant_count}}</p>
+            <p>Police{{n.police}}</p>
+            <p>Health:{{n.health}}</p>
+            <p>User:{{n.admin}}</p>
+        </div>
+    </div>
+   
+
+    {% if request.user.profile.neighbourhood == hood %}
+    <a href="{% url 'leave' hood.id %}" class="btn btn-outline-danger btn-sm">Leave Hood</a>
+    {% elif not request.user.profile.neighbourhood %}
+    <a href="{% url 'join' neighborhood.id %}" class="btn btn-primary btn-sm">Join Hood</a>
+    {% endif %}
+     {% endfor %}
+{% endblock %}
