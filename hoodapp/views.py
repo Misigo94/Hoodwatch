@@ -8,8 +8,10 @@ from django.views.generic import TemplateView,View,CreateView,ListView,DetailVie
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+
 def index(request):
     neigh=Neighborhood.objects.all()
     return render(request, 'index.html',{'neigh':neigh})
@@ -27,11 +29,14 @@ def register(request):
         form=RegistrationForm()
     return render(request, 'register/registration.html',{'form':form})
 
+@login_required()
 def create_neighborhood(request):
     if request.method == 'POST':
         form=NeighborhoodForm(request.POST)
         if form.is_valid():
-            form.save()
+            hood=form.save(commit=False)
+            hood.admin=request.user.profile
+            hood.save()
             return redirect('index')
     
     else:
@@ -69,11 +74,23 @@ class DeleteHood(DeleteView):
     fields='__all__'
     success_url=reverse_lazy('index')
 
-# def join(request,id):
-#     neighborhood=get_object_or_404(Neighborhood, id=id)
-#     request.admin.profile.neighborhood=neighborhood
-#     request.admin.profile.save()
+# def join(request):
+#     neighborhood=Neighborhood.objects.all()
+#     request.user.profile.neighborhood=neighborhood
+#     request.user.profile.save()
 #     return redirect('index')
+def join_hood(request,hood_id):
+    '''	View function that enables users join a hood	'''	
+    neighborhood = Neighborhood.objects.get(pk = hood_id)	
+   
+    return redirect('index')
+
+def leave(request):
+    request.user.profile.neighborhood=None
+    request.user.profile.save()
+    return redirect('index')
+
+
 
 def profile(request):
     if request.method == 'POST':
@@ -88,11 +105,9 @@ def profile(request):
         u_form = UserForm(instance=request.user)
         p_form = ProfileForm(instance=request.user.profile)
         current_profile = Profile.objects.get(user_id = request.user)
-        current_post = Post.user_post(request.user)
     context = {
         'u_form': u_form,
         'p_form': p_form,
-        'current_post':current_post,
         'current_profile':current_profile
     }
     return render(request, 'register/profile.html', context)
@@ -149,5 +164,7 @@ def business(request):
 def business_details(request,hood_id):
     business=Business.objects.filter(neighborhood=hood_id).all()
     return render(request, 'single_hood.html',{'business':business})
+
+
 
 
