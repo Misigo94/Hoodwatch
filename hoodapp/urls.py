@@ -20,5 +20,7 @@ urlpatterns=[
     path('display_post/', views.display_post, name='display_post'),
     path('business/', views.business, name='business'),
     path('business_d/<int:id>', views.business_details,name='business_d'),
-    # path('join/<id>',views.join,name=join),
+    path('search/', views.search_business, name='search'),
+    path('join/<int:id>', views.join_hood, name='join'),
+    path('leave/', views.leave, name='leave'),
 ]
