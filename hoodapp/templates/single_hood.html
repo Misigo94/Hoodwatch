@@ -3,11 +3,24 @@
 {% block content %}
 {{hood.name}}
 
-{% for bus in business %}
+<!-- {% for bus in business %}
  
  <p>{{ bus.name}}</p>
  <p>{{ bus.email}}</p>
  <p>{{ bus.profile}}</p>
+{% endfor %} -->
+
+{% for bus in business %}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p>Name:{{bus.name}}</p>
+        <p>Location:{{bus.location}}</p>
+        <p>Profile{{bus.profile}</p>
+        <p>Email:{{bus.email}}</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+</div>
 {% endfor %}
 
 <form action="" method="post">
